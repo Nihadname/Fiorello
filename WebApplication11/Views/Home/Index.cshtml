@@ -18,13 +18,11 @@
                 <div class="row">
                     <div class="col-lg-5">
                         <div class="text">
-                            <h1>Send <span>flowers</span> like</h1>
-                            <h1>you mean it</h1>
-                            <p class="text-black-50 d-none d-sm-block">Where flowers are our inspiration to create lasting memories. Whatever the occasion, our flowers will
-                                make it special cursus a sit amet mauris. </p>
+                            <h1>@Model.Content.Title</h1>
+                            <p class="text-black-50 d-none d-sm-block">@Model.Content.Desc </p>
                         </div>
                         <div class="img">
-                            <img src="~/img/h2-sign-img.png" alt="">
+                            <img src="~/img/@Model.Content.SignImageUrl" alt="">
                         </div>
                     </div>
                 </div>

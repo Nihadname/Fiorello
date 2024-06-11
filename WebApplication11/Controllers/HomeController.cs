@@ -19,7 +19,9 @@ namespace WebApplication11.Controllers
         {
             HomeViewModel model = new HomeViewModel();
            var sliders=fiorelloDbContext.sliders.AsNoTracking().ToList();
+            var sliderContent=fiorelloDbContext.contents.AsNoTracking().FirstOrDefault();
             model.Sliders = sliders;
+            model.Content = sliderContent;
             return View(model);
         }
 
