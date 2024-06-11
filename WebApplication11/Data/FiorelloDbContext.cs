@@ -9,6 +9,7 @@ namespace WebApplication11.Data
     {
         DbSet<Slider> sliders {  get; set; }
 
+
         public FiorelloDbContext(DbContextOptions<FiorelloDbContext> options) : base(options)
         {
 

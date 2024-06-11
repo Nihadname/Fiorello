@@ -4,6 +4,6 @@ namespace WebApplication11.Models
 {
     public class Slider:BaseEntity
     {
-        public int ImageUrl { get; set; }
+        public string ImageUrl { get; set; }
     }
 }
