@@ -8,5 +8,6 @@ namespace WebApplication11.ViewModels
         public SliderContent Content { get; set; }
         public IEnumerable<Category> Categories { get; set; }
         public IEnumerable<Product> products { get; set; }
+        public About About { get; set; }
     }
 }

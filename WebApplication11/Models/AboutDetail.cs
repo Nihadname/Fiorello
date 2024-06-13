@@ -8,5 +8,7 @@ namespace WebApplication11.Models
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }
+        public int AboutId { get; set; }
+        public About About { get; set; }
     }
 }

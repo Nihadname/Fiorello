@@ -22,10 +22,12 @@ namespace WebApplication11.Controllers
             var sliderContent=fiorelloDbContext.contents.AsNoTracking().FirstOrDefault();
             var categories=fiorelloDbContext.categories.AsNoTracking().ToList();
             var products=fiorelloDbContext.products.Include(s=>s.Images).Include(s=>s.Category).AsNoTracking().ToList();
+            var abouts = fiorelloDbContext.abouts.AsNoTracking().FirstOrDefault();
             model.Sliders = sliders;
             model.Content = sliderContent;
             model.Categories = categories;
             model.products=products;
+            model.About = abouts;
             return View(model);
         }
 
