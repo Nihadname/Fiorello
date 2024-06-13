@@ -10,8 +10,8 @@ namespace WebApplication11.Data
        public DbSet<Slider> sliders {  get; set; }
          public   DbSet<SliderContent> contents { get; set; }
         public DbSet<Category> categories { get; set; }
-
-
+        public  DbSet<Product> products { get; set; }
+        DbSet<ProductImage> productsImage { get; set; }
         public FiorelloDbContext(DbContextOptions<FiorelloDbContext> options) : base(options)
         {
 
@@ -20,6 +20,7 @@ namespace WebApplication11.Data
         {
             modelBuilder.ApplyConfiguration(new SliderContentConfiguration());
             modelBuilder.ApplyConfiguration(new SliderConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
         }
     }
 }

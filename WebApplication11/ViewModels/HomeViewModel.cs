@@ -6,5 +6,7 @@ namespace WebApplication11.ViewModels
     {
         public IEnumerable<Slider> Sliders { get; set; }
         public SliderContent Content { get; set; }
+        public IEnumerable<Category> Categories { get; set; }
+        public IEnumerable<Product> products { get; set; }
     }
 }

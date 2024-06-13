@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 using WebApplication11.Models.Common;
 
 namespace WebApplication11.Models
 {
-    public class Category:BaseEntity
+    public class AboutDetail: BaseEntity
     {
-        [MaxLength(40)]
         [Required]
+        [MaxLength(100)]
         public string Name { get; set; }
-      public  List<Product> products { get; set; }    }
+    }
 }
