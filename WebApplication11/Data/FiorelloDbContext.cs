@@ -26,6 +26,8 @@ namespace WebApplication11.Data
             modelBuilder.ApplyConfiguration(new SliderConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new AboutConfiguration());
+            modelBuilder.ApplyConfiguration(new ExpertConfiguration());
+            modelBuilder.ApplyConfiguration(new ExpertItemConfiguration());
         }
     }
 }

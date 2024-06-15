@@ -9,5 +9,6 @@ namespace WebApplication11.ViewModels
         public IEnumerable<Category> Categories { get; set; }
         public IEnumerable<Product> products { get; set; }
         public About About { get; set; }
+        public Expert Expert { get; set; }
     }
 }
