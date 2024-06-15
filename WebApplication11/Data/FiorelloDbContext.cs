@@ -14,6 +14,8 @@ namespace WebApplication11.Data
         public DbSet<ProductImage> productsImage { get; set; }
         public DbSet<About> abouts { get; set; }
         public DbSet<AboutDetail> aboutDetails { get; set; }
+        public DbSet<Expert> experts { get; set; }
+        public DbSet<ExpertItem> expertItems { get; set; }
         public FiorelloDbContext(DbContextOptions<FiorelloDbContext> options) : base(options)
         {
 
