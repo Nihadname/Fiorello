@@ -28,6 +28,7 @@ namespace WebApplication11.Data
             modelBuilder.ApplyConfiguration(new AboutConfiguration());
             modelBuilder.ApplyConfiguration(new ExpertConfiguration());
             modelBuilder.ApplyConfiguration(new ExpertItemConfiguration());
+            modelBuilder.Entity<Blog>().Property(o=>o.DateTime).HasDefaultValue(DateTime.Now);
         }
     }
 }
