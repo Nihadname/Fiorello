@@ -8,7 +8,7 @@ namespace WebApplication11.Models
     {
         [Required,MaxLength(50)]
         public string Title { get; set; }
-        [Required, MaxLength(80)]
+        [Required, MaxLength(280)]
         public string Description { get; set; }
         [Required]
         public string ImageUrl { get; set; }

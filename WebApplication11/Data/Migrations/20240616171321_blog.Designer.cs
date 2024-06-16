@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication11.Data;
 
@@ -11,9 +12,11 @@ using WebApplication11.Data;
 namespace WebApplication11.Data.Migrations
 {
     [DbContext(typeof(FiorelloDbContext))]
-    partial class FiorelloDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240616171321_blog")]
+    partial class blog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,12 +93,12 @@ namespace WebApplication11.Data.Migrations
                     b.Property<DateTime?>("DateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasDefaultValue(new DateTime(2024, 6, 16, 21, 13, 20, 780, DateTimeKind.Local).AddTicks(6467));
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(280)
-                        .HasColumnType("nvarchar(280)");
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -108,7 +111,7 @@ namespace WebApplication11.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("blogs");
+                    b.ToTable("Blog");
                 });
 
             modelBuilder.Entity("WebApplication11.Models.Category", b =>

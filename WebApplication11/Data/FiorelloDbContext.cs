@@ -16,6 +16,7 @@ namespace WebApplication11.Data
         public DbSet<AboutDetail> aboutDetails { get; set; }
         public DbSet<Expert> experts { get; set; }
         public DbSet<ExpertItem> expertItems { get; set; }
+        public DbSet<Blog> blogs { get; set; }   
         public FiorelloDbContext(DbContextOptions<FiorelloDbContext> options) : base(options)
         {
 
@@ -28,7 +29,9 @@ namespace WebApplication11.Data
             modelBuilder.ApplyConfiguration(new AboutConfiguration());
             modelBuilder.ApplyConfiguration(new ExpertConfiguration());
             modelBuilder.ApplyConfiguration(new ExpertItemConfiguration());
-            modelBuilder.Entity<Blog>().Property(o=>o.DateTime).HasDefaultValue(DateTime.Now);
+            modelBuilder.Entity<Blog>()
+                .Property(o => o.DateTime)
+                .HasDefaultValueSql("GETDATE()");
         }
     }
 }

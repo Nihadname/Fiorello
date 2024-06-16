@@ -6,6 +6,7 @@ namespace WebApplication11.Models
     {
         public string ImageUrl { get; set; }
         public string Title { get; set; }
+
         public string position { get; set; }
         public int ExpertId { get; set; }
         public Expert Expert { get; set; }

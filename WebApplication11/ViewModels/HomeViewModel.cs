@@ -10,5 +10,6 @@ namespace WebApplication11.ViewModels
         public IEnumerable<Product> products { get; set; }
         public About About { get; set; }
         public Expert Expert { get; set; }
+        public IEnumerable<Blog> Blogs { get; set; }
     }
 }
