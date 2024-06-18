@@ -8,7 +8,7 @@ namespace WebApplication11.Models
     public class Blog:BaseEntity
     {
         [Required,MaxLength(50)]
-        public string Title { get; set; }
+        public string Title { get; set; } 
         [Required, MaxLength(280)]
         public string Description { get; set; }
         [Required]

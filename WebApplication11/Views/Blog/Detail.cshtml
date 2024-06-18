@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "DetailBlog Page";
+}
+@model Blog
+
+    <section id="about">
+            <div class="container py-5">
+                <div class="row py-5">
+                    <div class="col-lg-6">
+                        <div class="img">
+                            <img src="~/img/@Model.ImageUrl" class="img-fluid" alt="">
+                          
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="about-text mt-5 mt-lg-0 px-lg-5">
+                            <h1>@Model.Title</h1>
+                            <p class="py-3">@Model.Description</p>
+                            <ul class="list-unstyled">
+                        
+                       
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
