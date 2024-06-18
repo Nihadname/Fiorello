@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.InteropServices;
 using WebApplication11.Models.Common;
 
@@ -12,5 +13,7 @@ namespace WebApplication11.Models
         public string Description { get; set; }
         [Required]
         public string ImageUrl { get; set; }
+        [NotMapped]
+        public string ShortDesc => Description.Length>=50 ? Description.Substring(0,50) :Description;
     }
 }

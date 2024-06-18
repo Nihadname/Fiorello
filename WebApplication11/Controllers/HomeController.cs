@@ -24,7 +24,7 @@ namespace WebApplication11.Controllers
             var products=fiorelloDbContext.products.Include(s=>s.Images).Include(s=>s.Category).AsNoTracking().ToList();
             var abouts = fiorelloDbContext.abouts.Include(s=>s.Details).AsNoTracking().FirstOrDefault();
             var  experts=fiorelloDbContext.experts.Include(s=>s.ExpertItems).AsNoTracking().FirstOrDefault();
-          var blogs=fiorelloDbContext.blogs.AsNoTracking().ToList();
+          var blogs=fiorelloDbContext.blogs.OrderByDescending(b=>b.Id).Take(3).ToList();
             model.Sliders = sliders;
             model.Content = sliderContent;
             model.Categories = categories;
