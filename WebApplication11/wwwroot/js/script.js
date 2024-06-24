@@ -1,4 +1,30 @@
+
 $(document).ready(function () {
+    //load more
+    let skip = 3
+
+    $(document).on("click", "#loadmore", function () {
+        $.ajax({
+            url: "/blog/loadmore?skip="+skip,
+            method: "get",
+            success: function (datas) {
+                console.log(datas);
+                $("#blogList").append(datas);
+                skip += 3;
+                const BlogCount = $("#BlogCount").val();
+
+                if (skip >= BlogCount) {
+                    $("#loadmore").remove();
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    });
+
+
+
 
     // HEADER
 
