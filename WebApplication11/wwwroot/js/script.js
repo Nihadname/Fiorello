@@ -24,14 +24,16 @@ $(document).ready(function () {
     });
     $(document).on("click", ".SecondLoadMore", function () {
         $.ajax({
-            url: "/product/loadmore?skip=" + skip2,
+            url: "/product/LoadMore?skip=" + skip2,
             method: "get",
             success: function (datas) {
                 console.log(datas);
                 $("#ProductList").append(datas);
                 skip2 += 4;
-                const ProductCount = $("#ProductCount").val();
-                if (skip2 >= ProductCount) {
+                console.log(skip2);
+                const ProductCount = $("#ProductCount2").val();
+                console.log(ProductCount);
+                if (skip2 > ProductCount) {
                     $(".SecondLoadMore").remove();
                 }
             },
