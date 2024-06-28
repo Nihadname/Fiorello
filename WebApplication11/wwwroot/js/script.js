@@ -1,6 +1,7 @@
 $(document).ready(function () {
     //load more
     let skip = 3
+    let skip2 = 4;
 
     $(document).on("click", "#loadmore", function () {
         $.ajax({
@@ -10,8 +11,8 @@ $(document).ready(function () {
                 console.log(datas);
                 $("#blogList").append(datas);
                 skip += 3;
-                const BlogCount = $("#BlogCount").val();
-
+                const BlogCount = $("#ProductCount").val();
+                console.log(skip);
                 if (skip >= BlogCount) {
                     $("#loadmore").remove();
                 }
@@ -21,14 +22,38 @@ $(document).ready(function () {
             }
         })
     });
-
+    $(document).on("click", ".SecondLoadMore", function () {
+        $.ajax({
+            url: "/product/loadmore?skip=" + skip2,
+            method: "get",
+            success: function (datas) {
+                console.log(datas);
+                $("#ProductList").append(datas);
+                skip2 += 4;
+                const ProductCount = $("#ProductCount").val();
+                if (skip2 >= ProductCount) {
+                    $(".SecondLoadMore").remove();
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    })
     $(document).on("keyup", "#input-search", function () {
+        $("#SearchList li").slice(1).remove();
         let value = $(this).val().trim();
         console.log(value);
-        $.ajax({
-            url: "/blog/Search/text",
+        if (value) {
+            $.ajax({
+                url: "/blog/Search?text="+value,
+                method: "get",
+                success: function(datas){
+                    $("#SearchList").append(datas);
+                }
 
-        })
+            })
+        }
     })
 
 

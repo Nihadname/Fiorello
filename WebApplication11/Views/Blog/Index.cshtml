@@ -6,6 +6,7 @@
 <section id="blog">
 <div class="container">
     <div class="row pb-5" id="blogList">
+            <input type="hidden" value="@ViewBag.BlogCount" id="ProductCount" />
         @foreach (var blog in Model)
         {
             <div class="col-md-6 col-lg-4">
