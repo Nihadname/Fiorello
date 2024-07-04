@@ -9,7 +9,7 @@ namespace WebApplication11
     {
         public static void Register(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews() ;
             services.AddDbContext<FiorelloDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("AppConnectionString"))
             );

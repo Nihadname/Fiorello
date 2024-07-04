@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using WebApplication11.Data;
+using WebApplication11.ViewModels;
 
 namespace WebApplication11.Controllers
 {
@@ -23,17 +24,28 @@ namespace WebApplication11.Controllers
                                              .Take(4)
                                              .ToList();
             ViewBag.AllCount = fiorelloDbContext.products.Count();
-           
+            List<ProductVM> productList = new();
+            foreach (var product in products)
+            {
+                ProductVM productVM = new ProductVM();
+                productVM.categoryName = product.Category.Name;
+                productVM.Price = product.Price;
+                productVM.Name = product.Name;
+                productVM.MainIMage = product.Images.FirstOrDefault(s=>s.IsMain==true).Name;
+                productList.Add(productVM);
+            }
             if (products.Any())
             {
-                return View(products);
+                return Json(productList);
             }
             return View();
         }
         public IActionResult Detail(int? id)
         {
             if(id == null) return BadRequest();
-            var product = fiorelloDbContext.products.AsNoTracking().FirstOrDefault(s=>s.Id==id);
+            var product = fiorelloDbContext.products.Include(p => p.Category)
+                                             .Include(p => p.Images)
+                                             .AsNoTracking().FirstOrDefault(s=>s.Id==id);
             if (product == null) return NotFound();
             return View(product);
         }

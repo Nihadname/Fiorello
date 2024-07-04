@@ -74,7 +74,7 @@
                    <div class="col-sm-6 col-md-4 col-lg-3 mt-3">
                         <div class="product-item text-center" data-id="@products.Category.Name">
                             <div class="img">
-                                <a href="">
+                                <a asp-controller="Prodcut" asp-action="Detail" asp-route-id="@products.Id">
                                     <img src="~/img/@(products.Images.Any(s=>s.IsMain)?products.Images.FirstOrDefault(s=>s.IsMain)?.Name:"default.png")" class="img-fluid" alt="">
                                 </a>
                             </div>
