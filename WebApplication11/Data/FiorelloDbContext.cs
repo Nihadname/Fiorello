@@ -2,6 +2,7 @@
 using System;
 using WebApplication11.Data.Configurations;
 using WebApplication11.Models;
+using WebApplication11.Models.Common;
 
 namespace WebApplication11.Data
 {
@@ -30,7 +31,8 @@ namespace WebApplication11.Data
             modelBuilder.ApplyConfiguration(new AboutConfiguration());
             modelBuilder.ApplyConfiguration(new ExpertConfiguration());
             modelBuilder.ApplyConfiguration(new ExpertItemConfiguration());
-            modelBuilder.Entity<Blog>()
+           modelBuilder.ApplyConfiguration(new SettingConfiguration());
+            modelBuilder.Entity<BaseEntity>()
                 .Property(o => o.DateTime)
                 .HasDefaultValueSql("GETDATE()");
         }
