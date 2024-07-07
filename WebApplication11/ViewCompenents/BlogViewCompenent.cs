@@ -12,7 +12,7 @@ public class BlogViewComponent: ViewComponent
     }
     public async Task<IViewComponentResult> InvokeAsync(int take=3)
     {
-        ICollection<Blog> blogs=fiorelloDbContext.blogs.Take(take).ToList();
+        ICollection<Blog> blogs= fiorelloDbContext.blogs.Take(take).ToList();
         return  View( await Task.FromResult(blogs));
 
     }

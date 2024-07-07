@@ -17,8 +17,7 @@ namespace WebApplication11.Controllers
         {
             var  query=fiorelloDbContext.blogs;
             ViewBag.BlogCount = query.Count();
-            var datas = query.AsNoTracking().Take(3).ToList();
-            return View(datas);
+            return View();
         }
         public IActionResult Detail(int? id)
         {

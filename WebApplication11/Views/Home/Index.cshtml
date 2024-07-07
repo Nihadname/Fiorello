@@ -68,28 +68,9 @@
                         </ul>
                     </div>
                 </div>
-                <div class="row">
-            @foreach(var products in Model.products)
-            {
-                   <div class="col-sm-6 col-md-4 col-lg-3 mt-3">
-                        <div class="product-item text-center" data-id="@products.Category.Name">
-                            <div class="img">
-                                <a asp-controller="Prodcut" asp-action="Detail" asp-route-id="@products.Id">
-                                    <img src="~/img/@(products.Images.Any(s=>s.IsMain)?products.Images.FirstOrDefault(s=>s.IsMain)?.Name:"default.png")" class="img-fluid" alt="">
-                                </a>
-                            </div>
-                            <div class="title mt-3">
-                                <h6>@products.Name</h6>
-                            </div>
-                            <div class="price">
-                                <span class="text-black-50">Add to cart</span>
-                                <span class="text-black-50">$@products.Price</span>
-                            </div>
-                        </div>
-                    </div>
-            }
-
-                </div>
+           <div class="row">
+    @await Component.InvokeAsync("Product", new { take = 4 })
+</div>
             </div>
         </section>
 

@@ -24,10 +24,7 @@ namespace WebApplication11.Controllers
                                                  categoryName=p.Category.Name,
                                                  MainIMage=p.Images.FirstOrDefault(s=>s.IsMain==true).Name})
                                              .ToList();
-            var products2 = fiorelloDbContext.products
-                                           .Include(p => p.Category)
-                                           .Include(p => p.Images)
-                                           .Take(4).ToList();
+           
             ViewBag.AllCount = fiorelloDbContext.products.Count();
             //List<ProductVM> productList = new();
             //foreach (var product in products)
@@ -39,10 +36,7 @@ namespace WebApplication11.Controllers
             //    productVM.MainIMage = product.Images.FirstOrDefault(s=>s.IsMain==true).Name;
             //    productList.Add(productVM);
             //}
-            if (products.Any())
-            {
-                return View(products2);
-            }
+            
             return View();
         }
         public IActionResult Detail(int? id)
