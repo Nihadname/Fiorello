@@ -18,25 +18,30 @@ namespace WebApplication11.Controllers
            
             ViewBag.AllCount= fiorelloDbContext.products.Count();
             var products = fiorelloDbContext.products
-                                             .Include(p => p.Category)
-                                             .Include(p => p.Images)
-                                             .AsNoTracking()
                                              .Take(4)
+                                             .Select(p => new ProductVM { Name=p.Name,
+                                                 Price=p.Price, 
+                                                 categoryName=p.Category.Name,
+                                                 MainIMage=p.Images.FirstOrDefault(s=>s.IsMain==true).Name})
                                              .ToList();
+            var products2 = fiorelloDbContext.products
+                                           .Include(p => p.Category)
+                                           .Include(p => p.Images)
+                                           .Take(4).ToList();
             ViewBag.AllCount = fiorelloDbContext.products.Count();
-            List<ProductVM> productList = new();
-            foreach (var product in products)
-            {
-                ProductVM productVM = new ProductVM();
-                productVM.categoryName = product.Category.Name;
-                productVM.Price = product.Price;
-                productVM.Name = product.Name;
-                productVM.MainIMage = product.Images.FirstOrDefault(s=>s.IsMain==true).Name;
-                productList.Add(productVM);
-            }
+            //List<ProductVM> productList = new();
+            //foreach (var product in products)
+            //{
+            //    ProductVM productVM = new ProductVM();
+            //    productVM.categoryName = product.Category.Name;
+            //    productVM.Price = product.Price;
+            //    productVM.Name = product.Name;
+            //    productVM.MainIMage = product.Images.FirstOrDefault(s=>s.IsMain==true).Name;
+            //    productList.Add(productVM);
+            //}
             if (products.Any())
             {
-                return Json(productList);
+                return View(products2);
             }
             return View();
         }

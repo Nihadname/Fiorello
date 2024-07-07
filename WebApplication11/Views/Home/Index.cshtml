@@ -200,27 +200,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="row pb-5">
-            @foreach(var blog in Model.Blogs)
-            {
-       <div class="col-md-6 col-lg-4">
-                        <div class="item">
-                            <div class="img position-relative">
-                               <a asp-controller="blog" asp-action="detail" asp-route-id="@blog.Id"> <img src="~/img/@blog.ImageUrl" class="img-fluid" alt=""></a>
-                                <div class="date rounded bg-light position-absolute py-1 px-2">
-                                    <span>@blog.DateTime?.ToString("MM.dd.yyyy")</span>
-                                </div>
-                            </div>
-                            <div class="text mt-3 text-center px-5">
-                                <h5>@blog.Title</h5>
-                                <p class="text-black-50 text-center">@blog.ShortDesc...</p>
-                            </div>
-                        </div>
-                    </div>            
-                    }
-     
-                
-                </div>
+               <div class="row pb-5">
+          @await Component.InvokeAsync("Blog")
+</div>
+
             </div>
         </section>
 
