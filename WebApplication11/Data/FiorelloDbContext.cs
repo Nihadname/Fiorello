@@ -10,6 +10,7 @@ namespace WebApplication11.Data
        public DbSet<Slider> sliders {  get; set; }
          public   DbSet<SliderContent> contents { get; set; }
         public DbSet<Category> categories { get; set; }
+        public DbSet<Setting> settings { get; set; }
         public  DbSet<Product> products { get; set; }
         public DbSet<ProductImage> productsImage { get; set; }
         public DbSet<About> abouts { get; set; }
