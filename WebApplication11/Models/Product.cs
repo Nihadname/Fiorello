@@ -1,4 +1,5 @@
-﻿using WebApplication11.Models.Common;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using WebApplication11.Models.Common;
 
 namespace WebApplication11.Models
 {
@@ -9,6 +10,8 @@ namespace WebApplication11.Models
         public int CategoryId { get; set; }
         public Category Category { get; set; }
         public int Count { get; set; }
+     
       public List<ProductImage> Images { get; set; }
+
     }
 }

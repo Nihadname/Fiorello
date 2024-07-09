@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using WebApplication11.Data;
 using WebApplication11.Models;
+using WebApplication11.ViewModels;
 
 namespace WebApplication11.Controllers
 {
@@ -24,41 +25,55 @@ namespace WebApplication11.Controllers
             var existedProduct=fiorelloDbContext.products.FirstOrDefault(s=>s.Id==id);
             if (existedProduct == null) return NotFound();
             string basket = Request.Cookies["basket"];
-            List<Product> products;
+            List<BasketVM> products;
             if (string.IsNullOrEmpty(basket))
             {
-           products = new List<Product>();
+           products = new List<BasketVM>();
             }
             else
             {
-                products =JsonConvert.DeserializeObject<List<Product>>(basket);
+                products =JsonConvert.DeserializeObject<List<BasketVM>>(basket);
             }
-            Product product = products.FirstOrDefault(s=>s.Id==existedProduct.Id);
+            BasketVM product = products.FirstOrDefault(s=>s.Id==existedProduct.Id);
             if (product == null)
             {
-                products.Add(existedProduct);
+                products.Add(new BasketVM()
+                {
+                    Id = existedProduct.Id,
+                    BasketCount = 1,
+                    //Name=existedProduct.Name,
+                });
             }
             else
             {
-
+                product.BasketCount++;
             }
             
             Response.Cookies.Append("basket",JsonConvert.SerializeObject(products));
-            return Content("elave olundu");
+            return RedirectToAction(nameof(ShowBasket));   
         }
         public IActionResult ShowBasket()
         {
             string basket = Request.Cookies["basket"];
-            List<Product> products;
+            List<BasketVM> products;
             if (string.IsNullOrEmpty(basket))
             {
-                products = new List<Product>();
+                products = new List<BasketVM>();
             }
             else
             {
-                products= JsonConvert.DeserializeObject<List<Product>>(basket);
+                products= JsonConvert.DeserializeObject<List<BasketVM>>(basket);
+                foreach(var BasketProduct in products)
+                {
+                    var existedProduct=fiorelloDbContext.products.
+                        Include(s=>s.Images).FirstOrDefault(s=>s.Id== BasketProduct.Id);
+                    BasketProduct.Name = existedProduct.Name;
+                    BasketProduct.IMageName = existedProduct.Images.FirstOrDefault(s => s.IsMain == true).Name;
+          BasketProduct.Price=existedProduct.Price;
+
+                }
             }
-            return Json(products);
+            return View(products);
         }
         //public IActionResult GetItem()
         //{
