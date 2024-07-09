@@ -3,10 +3,10 @@ using WebApplication11.Data;
 
 namespace WebApplication11.ViewCompenents
 {
-    public class SettingViewComponent : ViewComponent
+    public class SettingHeaderViewComponent : ViewComponent
     {
         private readonly FiorelloDbContext _context;
-        public SettingViewComponent(FiorelloDbContext context)
+        public SettingHeaderViewComponent(FiorelloDbContext context)
         {
             _context = context;
             

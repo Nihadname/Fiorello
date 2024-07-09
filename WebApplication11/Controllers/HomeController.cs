@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using WebApplication11.Data;
 using WebApplication11.Models;
+using WebApplication11.Services;
+using WebApplication11.Services.interfaces;
 using WebApplication11.ViewModels;
 
 namespace WebApplication11.Controllers
@@ -17,6 +19,7 @@ namespace WebApplication11.Controllers
         }
         public IActionResult Index()
         {
+    
             HomeViewModel model = new HomeViewModel();
            var sliders=fiorelloDbContext.sliders.AsNoTracking().ToList();
             var sliderContent=fiorelloDbContext.contents.AsNoTracking().FirstOrDefault();

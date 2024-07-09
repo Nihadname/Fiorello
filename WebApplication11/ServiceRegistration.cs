@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebApplication11.Data;
+using WebApplication11.Services;
+using WebApplication11.Services.interfaces;
 
 namespace WebApplication11
 {
@@ -13,6 +15,14 @@ namespace WebApplication11
             services.AddDbContext<FiorelloDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("AppConnectionString"))
             );
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(20);
+            });
+            //services.AddScoped<ISumService, SumService>();
+            //services.AddTransient<ISumService, SumService>();
+            //services.AddSingleton<ISumService, SumService>();
         }
+
     }
 }
