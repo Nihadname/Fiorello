@@ -18,5 +18,9 @@ app.UseRouting();
 
 app.UseAuthorization();
 app.MapDefaultControllerRoute();
+app.MapControllerRoute(
+           name: "areas",
+           pattern: "{area:exists}/{controller=DashBoard}/{action=Index}/{id?}"
+         );
 
 app.Run();
