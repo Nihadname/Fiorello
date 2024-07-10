@@ -165,7 +165,7 @@
             </div>
         }
 
-    <div class="total-row  totalPrice">
+    <div class="total-row " id="total-price">
         Total: $@ViewBag.BasketPrice
         </div>
         <div class="text-end mt-3">
@@ -192,7 +192,7 @@
                     const priceElement = $(button).closest('.product-row').find('.product-price');
                     const price = parseFloat(priceElement.data('price'));
                     priceElement.text('$' + (price * value).toFixed(2));
-                   
+                    $('#total-price').text(result.totalPrice.toFixed(2));
                 }
             }
         });
