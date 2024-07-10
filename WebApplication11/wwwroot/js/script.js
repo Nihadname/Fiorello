@@ -42,6 +42,9 @@ $(document).ready(function () {
             }
         })
     })
+
+
+    
     $(document).on("keyup", "#input-search", function () {
         $("#SearchList li").slice(1).remove();
         let value = $(this).val().trim();

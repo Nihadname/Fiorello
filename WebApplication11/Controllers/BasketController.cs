@@ -2,9 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using WebApplication11.Data;
+using WebApplication11.Data.Migrations;
 using WebApplication11.Models;
 using WebApplication11.ViewModels;
-
+ 
 namespace WebApplication11.Controllers
 {
     public class BasketController : Controller
@@ -41,6 +42,7 @@ namespace WebApplication11.Controllers
                 {
                     Id = existedProduct.Id,
                     BasketCount = 1,
+                    Price=existedProduct.Price,
                     //Name=existedProduct.Name,
                 });
             }
@@ -70,10 +72,25 @@ namespace WebApplication11.Controllers
                     BasketProduct.Name = existedProduct.Name;
                     BasketProduct.IMageName = existedProduct.Images.FirstOrDefault(s => s.IsMain == true).Name;
           BasketProduct.Price=existedProduct.Price;
-
+                    decimal total = products.Sum(item => item.Price * item.BasketCount);
+                    ViewBag.BasketPrice = total;
                 }
             }
             return View(products);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateAmount(int id, int amount)
+        {
+            string basket = Request.Cookies["basket"];
+            var products = JsonConvert.DeserializeObject<List<BasketVM>>(basket);
+            BasketVM existedProduct=products.FirstOrDefault(s=>s.Id==id);   
+            if(existedProduct==null) return NotFound();
+            existedProduct.BasketCount += amount;
+            if (existedProduct.BasketCount < 1) existedProduct.BasketCount = 1;
+            Response.Cookies.Append("basket", JsonConvert.SerializeObject(products));
+
+            return Json(new { success = true} );
+
         }
         //public IActionResult GetItem()
         //{

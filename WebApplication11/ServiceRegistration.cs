@@ -19,6 +19,8 @@ namespace WebApplication11
             {
                 options.IdleTimeout = TimeSpan.FromSeconds(20);
             });
+            services.AddHttpContextAccessor();
+            services.AddScoped<IBasketService, BasketService>();
             //services.AddScoped<ISumService, SumService>();
             //services.AddTransient<ISumService, SumService>();
             //services.AddSingleton<ISumService, SumService>();
