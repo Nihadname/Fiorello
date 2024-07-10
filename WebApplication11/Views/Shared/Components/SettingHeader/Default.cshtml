@@ -150,8 +150,27 @@
                                 <sup class="rounded-circle">@count</sup>
                                 <span>CART ($@totalPrice)</span>
                                 <ul class="list-unstyled py-3">
-                                    <li class="">No products in the cart.</li>
+                                    @{
+                                        var basketList = baskerService.GetBasketList();
+                                    }
+                                    @if (basketList == null || !basketList.Any())
+                                    {
+                                        <li>
+                                            There is no product in the basket
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var item in basketList)
+                                        {
+                                            <li>
+                                                <img src="~/img/@item.IMageName" width="50" height="50" />
+                                                @item.Name
+                                            </li>
+                                        }
+                                    }
                                 </ul>
+
                             </li>
                         </ul>
                     </div>

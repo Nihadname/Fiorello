@@ -92,6 +92,23 @@ namespace WebApplication11.Controllers
             return Json(new { success = true} );
 
         }
+      
+        public async Task<IActionResult> DeleteItem(int id)
+        {
+            string basket = Request.Cookies["basket"];
+            if (string.IsNullOrEmpty(basket)) return BadRequest("Basket is empty.");
+
+            var products = JsonConvert.DeserializeObject<List<BasketVM>>(basket);
+            if (products == null) return BadRequest("Basket is empty.");
+
+            var product = products.FirstOrDefault(p => p.Id == id);
+            if (product == null) return NotFound();
+
+            products.Remove(product);
+
+            Response.Cookies.Append("basket", JsonConvert.SerializeObject(products));
+            return RedirectToAction("Index","home");   
+        }
         //public IActionResult GetItem()
         //{
         //  var result=  HttpContext.Session.GetString("group");
