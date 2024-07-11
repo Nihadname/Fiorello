@@ -139,27 +139,16 @@
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" asp-action="index" asp-controller="Dashboard">
+                        <a class="nav-link" asp-area="AdminArea" asp-controller="DashBoard" asp-action="Index">
                             <i class="mdi mdi-home menu-icon"></i>
                             <span class="menu-title">Dashboard</span>
                         </a>
                     </li>
+
                     <li class="nav-item">
-                        <a asp-controller="Student" class="nav-link" asp-action="index">
+                        <a class="nav-link"  asp-action="index" asp-controller="Category">
                             <i class="mdi mdi-home menu-icon"></i>
-                            <span class="menu-title">Students</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-controller="Teacher" class="nav-link" asp-action="index">
-                            <i class="mdi mdi-home menu-icon"></i>
-                            <span class="menu-title">Teachers</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-controller="Group" class="nav-link" asp-action="index">
-                            <i class="mdi mdi-home menu-icon"></i>
-                            <span class="menu-title">Groups</span>
+                            <span class="menu-title">Category</span>
                         </a>
                     </li>
                 </ul>
