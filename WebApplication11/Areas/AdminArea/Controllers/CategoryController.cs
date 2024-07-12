@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using WebApplication11.Areas.AdminArea.ViewModels.Category;
 using WebApplication11.Data;
 using WebApplication11.Models;
@@ -40,6 +41,11 @@ namespace WebApplication11.Areas.AdminArea.Controllers
         public async  Task<IActionResult> Create(CategoryCreateVM category)
         {
             if(!ModelState.IsValid)  return View(category);
+            if(await _fiorelloDbContext.categories.AnyAsync(s=>s.Name.ToLower()==category.Name.ToLower()))
+            {
+                 ModelState.AddModelError("Name","bele bir category movcuddur");
+                return View(category);
+            }
             var newCategory = new Category()
             {
                 Name = category.Name,
@@ -53,5 +59,37 @@ namespace WebApplication11.Areas.AdminArea.Controllers
             
         }
 
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if(id == null) return BadRequest();
+            var existedCategory = await _fiorelloDbContext.categories.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
+            if (existedCategory == null) return NotFound();
+             _fiorelloDbContext.categories.Remove(existedCategory);
+          await  _fiorelloDbContext.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> Update(int? id)
+        {
+            if (id == null) return BadRequest();
+            var existedCategory = await _fiorelloDbContext.categories.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
+            if (existedCategory == null) return NotFound();
+            return View(new CatagoryUpdateVM() { Description=existedCategory.Description,Name=existedCategory.Name });
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(int id, CatagoryUpdateVM category)
+        {
+            if(!ModelState.IsValid) return BadRequest();
+            if (id == null) return BadRequest();
+            var existedCategory = await _fiorelloDbContext.categories.FirstOrDefaultAsync(c => c.Id == id);
+            if (existedCategory == null) return NotFound();
+           existedCategory.Name = category.Name;
+            existedCategory.Description = category.Description;
+             _fiorelloDbContext.categories.Update(existedCategory);
+           await _fiorelloDbContext.SaveChangesAsync();
+           return RedirectToAction(nameof(Index));  
+
+        }
     }
 }
