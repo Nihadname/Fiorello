@@ -78,18 +78,23 @@ namespace WebApplication11.Areas.AdminArea.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int id, CatagoryUpdateVM category)
+        public async Task<IActionResult> Update(int? id, CatagoryUpdateVM category)
         {
             if(!ModelState.IsValid) return BadRequest();
             if (id == null) return BadRequest();
             var existedCategory = await _fiorelloDbContext.categories.FirstOrDefaultAsync(c => c.Id == id);
             if (existedCategory == null) return NotFound();
-           existedCategory.Name = category.Name;
+            var existeDCategoryNameWith = await _fiorelloDbContext.categories.AnyAsync(s => s.Name.ToLower() == category.Name.ToLower()&&s.Id!=existedCategory.Id);
+            if (existeDCategoryNameWith) 
+            {
+                ModelState.AddModelError("Name", "bele bir category movcuddur");
+                return View(category);
+            }
+            existedCategory.Name = category.Name;
             existedCategory.Description = category.Description;
              _fiorelloDbContext.categories.Update(existedCategory);
            await _fiorelloDbContext.SaveChangesAsync();
            return RedirectToAction(nameof(Index));  
-
         }
     }
 }
