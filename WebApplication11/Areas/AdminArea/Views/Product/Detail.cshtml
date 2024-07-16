@@ -1,0 +1,26 @@
+﻿@model Product
+
+<section id="about">
+    <div class="container py-5">
+        <div class="row py-5">
+            <div class="col-lg-6">
+                <div class="img">
+                    @{
+                        var mainImage = Model.Images?.FirstOrDefault(s => s.IsMain == true);
+                        var imageUrl = mainImage != null ? mainImage.Name : "default-image.jpg";
+                    }
+                    <img src="~/img/@imageUrl" class="img-fluid" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="about-text mt-5 mt-lg-0 px-lg-5">
+                    <h1>@Model.Name</h1>
+                    <p>@Model.Price</p>
+                    <h1>@Model.Category?.Name</h1>
+                    <ul class="list-unstyled">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebApplication11.Data;
+using WebApplication11.Repositories.interfaces;
+using WebApplication11.Repositories;
 using WebApplication11.Services;
 using WebApplication11.Services.interfaces;
 
@@ -21,6 +23,7 @@ namespace WebApplication11
             });
             services.AddHttpContextAccessor();
             services.AddScoped<IBasketService, BasketService>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             //services.AddScoped<ISumService, SumService>();
             //services.AddTransient<ISumService, SumService>();
             //services.AddSingleton<ISumService, SumService>();

@@ -2,31 +2,34 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using WebApplication11.Areas.AdminArea.ViewModels.Category;
+using WebApplication11.Controllers;
 using WebApplication11.Data;
 using WebApplication11.Models;
+using WebApplication11.Repositories.interfaces;
 
 namespace WebApplication11.Areas.AdminArea.Controllers
 {
     [Area("AdminArea")]
-    public class CategoryController : Controller
+    public class CategoryController : BaseController<Category>
     {
-        private readonly FiorelloDbContext _fiorelloDbContext;
+        private readonly FiorelloDbContext _context;
 
-        public CategoryController(FiorelloDbContext fiorelloDbContext)
+        public CategoryController(IRepository<Category> repository, FiorelloDbContext context) : base(repository)
         {
-            _fiorelloDbContext = fiorelloDbContext;
+            _context = context;
         }
+       
 
         public async Task<IActionResult> Index()
         {
-            var  categories= await _fiorelloDbContext.categories.AsNoTracking().ToListAsync();
+            var  categories= await GetAllAsync();
 
             return View(categories);
         }
         public async Task<IActionResult> Detail(int? id)
         {
             if(id is null ) return BadRequest();
-            var existedCategory= await _fiorelloDbContext.categories.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
+            var existedCategory= await GetByIdAsync(id);
             if(existedCategory == null) return NotFound();  
             return View(existedCategory);
         }
@@ -41,9 +44,9 @@ namespace WebApplication11.Areas.AdminArea.Controllers
         public async  Task<IActionResult> Create(CategoryCreateVM category)
         {
             if(!ModelState.IsValid)  return View(category);
-            if(await _fiorelloDbContext.categories.AnyAsync(s=>s.Name.ToLower()==category.Name.ToLower()))
+            if (await _context.categories.AnyAsync(s => s.Name.ToLower() == category.Name.ToLower()))
             {
-                 ModelState.AddModelError("Name","bele bir category movcuddur");
+                ModelState.AddModelError("Name", "bele bir category movcuddur");
                 return View(category);
             }
             var newCategory = new Category()
@@ -52,8 +55,7 @@ namespace WebApplication11.Areas.AdminArea.Controllers
                 Description = category.Description,
                 DateTime =DateTime.Now,
             };
-            await _fiorelloDbContext.AddAsync(newCategory);
-            await _fiorelloDbContext.SaveChangesAsync();
+          await AddAsync(newCategory);
               
             return RedirectToAction(nameof(Index));
             
@@ -62,16 +64,15 @@ namespace WebApplication11.Areas.AdminArea.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             if(id == null) return BadRequest();
-            var existedCategory = await _fiorelloDbContext.categories.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
+            var existedCategory = await GetByIdAsync(id);
             if (existedCategory == null) return NotFound();
-             _fiorelloDbContext.categories.Remove(existedCategory);
-          await  _fiorelloDbContext.SaveChangesAsync();
+           await  DeleteAsync(existedCategory);
             return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> Update(int? id)
         {
             if (id == null) return BadRequest();
-            var existedCategory = await _fiorelloDbContext.categories.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
+            var existedCategory = await GetByIdAsync(id);
             if (existedCategory == null) return NotFound();
             return View(new CatagoryUpdateVM() { Description=existedCategory.Description,Name=existedCategory.Name });
 
@@ -82,9 +83,9 @@ namespace WebApplication11.Areas.AdminArea.Controllers
         {
             if(!ModelState.IsValid) return BadRequest();
             if (id == null) return BadRequest();
-            var existedCategory = await _fiorelloDbContext.categories.FirstOrDefaultAsync(c => c.Id == id);
+            var existedCategory = await GetByIdAsync(id);
             if (existedCategory == null) return NotFound();
-            var existeDCategoryNameWith = await _fiorelloDbContext.categories.AnyAsync(s => s.Name.ToLower() == category.Name.ToLower()&&s.Id!=existedCategory.Id);
+            var existeDCategoryNameWith = await _context.categories.AnyAsync(s => s.Name.ToLower() == category.Name.ToLower()&&s.Id!=existedCategory.Id);
             if (existeDCategoryNameWith) 
             {
                 ModelState.AddModelError("Name", "bele bir category movcuddur");
@@ -92,8 +93,7 @@ namespace WebApplication11.Areas.AdminArea.Controllers
             }
             existedCategory.Name = category.Name;
             existedCategory.Description = category.Description;
-             _fiorelloDbContext.categories.Update(existedCategory);
-           await _fiorelloDbContext.SaveChangesAsync();
+      await   UpdateAsync(existedCategory);
            return RedirectToAction(nameof(Index));  
         }
     }
