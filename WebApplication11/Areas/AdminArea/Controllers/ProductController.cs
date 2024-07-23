@@ -18,7 +18,7 @@ namespace WebApplication11.Areas.AdminArea.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var products = await _repository.GetAllAsync(s=>s.Images,s=>s.Category);
+            var products = await _repository.GetAllAsync(0,0,s=>s.Images,s=>s.Category);
             return View(products);
         }
         public async Task<IActionResult> Detail(int? id)
