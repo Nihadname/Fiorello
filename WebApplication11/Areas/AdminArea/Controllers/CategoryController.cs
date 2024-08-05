@@ -10,26 +10,27 @@ using WebApplication11.Repositories.interfaces;
 namespace WebApplication11.Areas.AdminArea.Controllers
 {
     [Area("AdminArea")]
-    public class CategoryController : BaseController<Category>
+    public class CategoryController : Controller
     {
+        private readonly IRepository<Category> _repository;
         private readonly FiorelloDbContext _context;
 
-        public CategoryController(IRepository<Category> repository, FiorelloDbContext context) : base(repository)
+        public CategoryController(IRepository<Category> repository, FiorelloDbContext context)
         {
+            _repository = repository;
             _context = context;
         }
-       
 
         public async Task<IActionResult> Index()
         {
-            var  categories= await GetAllAsync();
+            var  categories= await _repository.GetAllAsync(0,0);
 
             return View(categories);
         }
         public async Task<IActionResult> Detail(int? id)
         {
             if(id is null ) return BadRequest();
-            var existedCategory= await GetByIdAsync(id);
+            var existedCategory= await _repository.GetByIdAsync(id);
             if(existedCategory == null) return NotFound();  
             return View(existedCategory);
         }
@@ -55,7 +56,7 @@ namespace WebApplication11.Areas.AdminArea.Controllers
                 Description = category.Description,
                 DateTime =DateTime.Now,
             };
-          await AddAsync(newCategory);
+          await _repository.AddAsync(newCategory);
               
             return RedirectToAction(nameof(Index));
             
@@ -64,15 +65,15 @@ namespace WebApplication11.Areas.AdminArea.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             if(id == null) return BadRequest();
-            var existedCategory = await GetByIdAsync(id);
+            var existedCategory = await _repository.GetByIdAsync(id);
             if (existedCategory == null) return NotFound();
-           await  DeleteAsync(existedCategory);
+           await _repository.DeleteAsync(existedCategory);
             return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> Update(int? id)
         {
             if (id == null) return BadRequest();
-            var existedCategory = await GetByIdAsync(id);
+            var existedCategory = await _repository.GetByIdAsync(id);
             if (existedCategory == null) return NotFound();
             return View(new CatagoryUpdateVM() { Description=existedCategory.Description,Name=existedCategory.Name });
 
@@ -83,7 +84,7 @@ namespace WebApplication11.Areas.AdminArea.Controllers
         {
             if(!ModelState.IsValid) return BadRequest();
             if (id == null) return BadRequest();
-            var existedCategory = await GetByIdAsync(id);
+            var existedCategory = await _repository.GetByIdAsync(id);
             if (existedCategory == null) return NotFound();
             var existeDCategoryNameWith = await _context.categories.AnyAsync(s => s.Name.ToLower() == category.Name.ToLower()&&s.Id!=existedCategory.Id);
             if (existeDCategoryNameWith) 
@@ -93,7 +94,7 @@ namespace WebApplication11.Areas.AdminArea.Controllers
             }
             existedCategory.Name = category.Name;
             existedCategory.Description = category.Description;
-      await   UpdateAsync(existedCategory);
+      await   _repository.UpdateAsync(existedCategory);
            return RedirectToAction(nameof(Index));  
         }
     }

@@ -47,6 +47,28 @@ namespace WebApplication11.Repositories
             return await queryForAddingDataInto.ToListAsync();
         }
 
+        public async Task<List<T>> GetAllAsync(int skip = 0, int take = 0, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _context.Set<T>();
+
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            if (skip > 0)
+            {
+                query = query.Skip(skip);
+            }
+
+            if (take > 0)
+            {
+                query = query.Take(take);
+            }
+
+            return await query.AsNoTracking().ToListAsync();
+        }
+
         public async Task<T> GetByIdAsync(int? id, params Expression<Func<T, object>>[] includes)
         {
             if (id is null) return null;
