@@ -43,6 +43,8 @@ namespace WebApplication11.Areas.AdminArea.Controllers
             ViewBag.Categories = new SelectList(await _categoryRepository.GetAllAsync(0, 0), "Id", "Name");
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductCreateVM productCreateVM)
         {
 
