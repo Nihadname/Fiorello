@@ -1,0 +1,63 @@
+﻿@model productUpdateVM
+
+<div class="container">
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                @if (Model?.Images != null)
+                {
+                    @foreach (var img in Model.Images)
+                    {
+                        if (img.IsMain == true)
+                        {
+                            <img src="~/img/@img.Name" width="300" height="150" />
+                            <span>Is Main</span> <br /> <br />
+                        }
+                        else
+                        {
+                            <img src="~/img/@img.Name" width="200" height="100" />
+                            <a class="btn btn-success" asp-action="DeleteImage" asp-route-id="@img.Id">Delete Image</a>
+                            <br /> <br />
+                        }
+                    }
+                }
+                else
+                {
+                    <p>No images found.</p>
+                }
+                <p class="card-description">Update category details</p>
+                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                <form method="post" class="forms-sample" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control" placeholder="Name">
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price"></label>
+                        <input asp-for="Price" class="form-control" placeholder="Price">
+                        <span class="text-danger" asp-validation-for="Price"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Count"></label>
+                        <input asp-for="Count" class="form-control" placeholder="Count">
+                        <span class="text-danger" asp-validation-for="Count"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Photos"></label>
+                        <input asp-for="Photos" class="form-control" placeholder="Photos">
+                        <span class="text-danger" asp-validation-for="Photos"></span>
+                    </div>
+                    <div class="form-group">
+
+                        <select asp-for="CategoryId" asp-items="@ViewBag.Categories">
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary me-2">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

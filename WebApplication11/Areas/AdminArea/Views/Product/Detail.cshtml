@@ -1,26 +1,35 @@
 ﻿@model Product
+<div class="Container">
 
-<section id="about">
-    <div class="container py-5">
-        <div class="row py-5">
-            <div class="col-lg-6">
-                <div class="img">
-                    @{
-                        var mainImage = Model.Images?.FirstOrDefault(s => s.IsMain == true);
-                        var imageUrl = mainImage != null ? mainImage.Name : "default-image.jpg";
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                @foreach (var item in Model.Images)
+                {
+                    if (item.IsMain==true)
+                    {
+                        <img src="~/img/@item.Name" width="300" height="80" />
+
+                        <br />
+
+                        <br />
+                        <p>Main Photo</p>
                     }
-                    <img src="~/img/@imageUrl" class="img-fluid" alt="">
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="about-text mt-5 mt-lg-0 px-lg-5">
-                    <h1>@Model.Name</h1>
-                    <p>@Model.Price</p>
-                    <h1>@Model.Category?.Name</h1>
-                    <ul class="list-unstyled">
-                    </ul>
-                </div>
+                    else
+                    {
+                        <img src="~/img/@item.Name" width="100" height="50" />
+                        <a class="text-decoration-none text-black btn btn-primary"
+                           asp-action="SetMainPhoto" asp-route-id="@item.Id">Set Main</a>
+
+                        <br />
+
+                        <br />
+                    }
+                }
+                <h4>@Model.Name</h4>
+                <p>@Model.Price</p>
+                <a class="btn btn-github" asp-action="Index">Go back</a>
             </div>
         </div>
     </div>
-</section>
+</div>
