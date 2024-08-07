@@ -88,6 +88,7 @@ namespace WebApplication11.Controllers
             existedProduct.BasketCount += amount;
             if (existedProduct.BasketCount < 1) existedProduct.BasketCount = 1;
             Response.Cookies.Append("basket", JsonConvert.SerializeObject(products));
+      
 
             decimal total = products.Sum(item => item.Price * item.BasketCount);
 

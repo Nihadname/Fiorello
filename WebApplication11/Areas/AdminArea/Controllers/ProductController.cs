@@ -135,6 +135,7 @@ namespace WebApplication11.Areas.AdminArea.Controllers
             if (existedProduct == null) return NotFound();
             return View(new productUpdateVM
             {
+
                 Name = existedProduct.Name,
                 Price = existedProduct.Price,
                 Count= existedProduct.Count,
@@ -155,7 +156,7 @@ namespace WebApplication11.Areas.AdminArea.Controllers
                 return View(model);
             }
             var files = model.Photos;
-            model.Images = model.Images;
+            model.Images = existedProduct.Images;
             if (files is not null)
             {
                 if (files.Length > 4)
@@ -178,8 +179,12 @@ namespace WebApplication11.Areas.AdminArea.Controllers
                     {
                         Name = await file.SaveFile(),
                         ProductId = existedProduct.Id,
-                        IsMain = false
-                    };
+                     
+                };
+                    if (files[0] == file)
+                    {
+                        blogImage.IsMain = true;
+                    }
                     list.Add(blogImage);
                 }
                 existedProduct.Images = list;
@@ -190,7 +195,7 @@ namespace WebApplication11.Areas.AdminArea.Controllers
             existedProduct.CategoryId = model.CategoryId;
             //appDbContext.Entry(existedProduct).State = EntityState.Modified;
             await _repository.UpdateAsync(existedProduct);
-            return View(model);
+            return RedirectToAction("Index");
 
         }
         public async Task<IActionResult> DeleteImage(int? id)
@@ -206,7 +211,8 @@ namespace WebApplication11.Areas.AdminArea.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return BadRequest();
-            var existedPhoto = await appDbContext.products.FirstOrDefaultAsync(x => x.Id == id);
+            var existedPhoto = await appDbContext.products.Include(s=>s.Images).Include(s=>s.Category)
+                .FirstOrDefaultAsync(x => x.Id == id);
             if (existedPhoto == null) return NotFound();
             foreach (var image in existedPhoto.Images)
             {

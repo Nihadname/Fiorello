@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using WebApplication11.Data.Configurations;
 using WebApplication11.Models;
@@ -6,7 +7,7 @@ using WebApplication11.Models.Common;
 
 namespace WebApplication11.Data
 {
-    public class FiorelloDbContext : DbContext
+    public class FiorelloDbContext : IdentityDbContext<AppUser>
     {
         public DbSet<Slider> sliders { get; set; }
         public DbSet<SliderContent> contents { get; set; }
