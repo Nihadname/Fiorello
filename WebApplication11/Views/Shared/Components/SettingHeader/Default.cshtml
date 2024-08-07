@@ -134,14 +134,15 @@
                                 </ul>
                             </li>
                             <li class="nav-item my-auto search">
-                                <i class="fas fa-search" id="search"></i>
-                                <ul class="list-unstyled py-3" id="SearchList">
-                                    <li class="d-flex px-3">
-                                        <input id="input-search" type="text" placeholder="Search">
-                                        <i class="fas fa-search my-auto" id="search"></i>
-                                    </li>
-
-                                </ul>
+                                @if (!User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-action="Login" asp-controller="Account">Login</a>
+                                }
+                                else
+                                {
+                                    <li>@User.Identity.Name</li>
+                                }
+                        </ul>
                             </li>
                             <li class="nav-item my-auto shop-cart">
                               <a asp-controller="Basket" asp-action="ShowBasket">

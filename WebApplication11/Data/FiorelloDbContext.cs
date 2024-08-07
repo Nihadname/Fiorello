@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using System;
 using WebApplication11.Data.Configurations;
 using WebApplication11.Models;
 using WebApplication11.Models.Common;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace WebApplication11.Data
 {
-    public class FiorelloDbContext : IdentityDbContext<AppUser>
+    public class FiorelloDbContext :IdentityDbContext<AppUser>
     {
         public DbSet<Slider> sliders { get; set; }
         public DbSet<SliderContent> contents { get; set; }
@@ -26,6 +27,8 @@ namespace WebApplication11.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             // modelBuilder.ApplyConfiguration(new SliderContentConfiguration());
             // modelBuilder.ApplyConfiguration(new SliderConfiguration());
             // modelBuilder.ApplyConfiguration(new ProductConfiguration());
@@ -37,6 +40,7 @@ namespace WebApplication11.Data
             modelBuilder.Entity<Blog>()
            .Property(o => o.DateTime)
            .HasDefaultValueSql("GETDATE()");
+            modelBuilder.Entity<AppUser>().HasKey(s=>s.Id);
         }
     }
 }
