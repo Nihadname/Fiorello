@@ -6,6 +6,8 @@ namespace WebApplication11.Models
     {
         public string fullName { get; set; }
         public bool IsBlocked { get; set; }
+        public string? ConnectionId { get; set; }
+
 
     }
 }
